@@ -1,50 +1,95 @@
 <x-app-layout>
-    <div style="padding: 32px;">
-        <h2 style="text-align: center; margin-bottom: 32px;">Create New Task</h2>
+    <div class="py-12">
+        <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6">
 
-        <form method="POST" action="{{ route('tasks.store') }}" id="createTaskForm">
-            @csrf
+                    <h2 class="text-2xl font-semibold text-gray-800 text-center mb-8">
+                        Create New Task
+                    </h2>
 
-            <div style="display: flex; align-items: center; margin-bottom: 24px;">
-                <label style="width: 200px;">Title *</label>
-                <div style="flex: 1;">
-                    <input type="text" name="title" id="title" value="{{ old('title') }}"
-                        style="width: 100%; border: 1px solid #ccc; padding: 12px;"
-                        required minlength="3" maxlength="255">
-                    <span id="titleError" style="color: red; font-size: 12px; display: none;">
-                        Title must be at least 3 characters.
-                    </span>
-                    @error('title')
-                        <span style="color: red; font-size: 12px;">{{ $message }}</span>
-                    @enderror
+                    @if(session('success'))
+                        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                    <form method="POST" action="{{ route('tasks.store') }}" id="createTaskForm">
+                        @csrf
+
+                        {{-- Title --}}
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">
+                                Title <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" name="title" id="title"
+                                value="{{ old('title') }}"
+                                required minlength="3" maxlength="255"
+                                class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                            <span id="titleError" class="text-red-500 text-xs mt-1 hidden">
+                                Title must be at least 3 characters.
+                            </span>
+                            @error('title')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        {{-- Description --}}
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">
+                                Description
+                            </label>
+                            <textarea name="description" id="description" maxlength="1000" rows="3"
+                                class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400">{{ old('description') }}</textarea>
+                        </div>
+
+                        {{-- Due Date and Time --}}
+                        <div class="mb-6 flex gap-6">
+                            <div class="flex-1">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">
+                                    Due Date
+                                </label>
+                                <input type="date" name="due_date" id="due_date"
+                                    value="{{ old('due_date') }}"
+                                    min="{{ date('Y-m-d') }}"
+                                    class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                                <span id="dateError" class="text-red-500 text-xs mt-1 hidden">
+                                    Date cannot be in the past.
+                                </span>
+                                @error('due_date')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div class="flex-1">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">
+                                    Time
+                                </label>
+                                <input type="time" name="due_time"
+                                    value="{{ old('due_time') }}"
+                                    class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                                @error('due_time')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+
+                        {{-- Buttons --}}
+                        <div class="flex justify-between mt-8">
+                            <a href="{{ route('tasks.index') }}"
+                                class="px-6 py-2 border border-gray-300 rounded-md text-gray-600 hover:bg-gray-100">
+                                Cancel
+                            </a>
+                            <button type="submit"
+                                class="px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
+                                Save Task
+                            </button>
+                        </div>
+
+                    </form>
                 </div>
             </div>
-
-            <div style="display: flex; align-items: center; margin-bottom: 24px;">
-                <label style="width: 200px;">Description</label>
-                <textarea name="description" id="description" maxlength="1000"
-                    style="flex: 1; border: 1px solid #ccc; padding: 12px;">{{ old('description') }}</textarea>
-            </div>
-
-            <div style="display: flex; align-items: center; margin-bottom: 24px;">
-                <label style="width: 200px;">Due date</label>
-                <input type="date" name="due_date" id="due_date" value="{{ old('due_date') }}"
-                    min="{{ date('Y-m-d') }}"
-                    style="border: 1px solid #ccc; padding: 12px; margin-right: 32px;">
-                <span id="dateError" style="color: red; font-size: 12px; display: none;">
-                    Date cannot be in the past.
-                </span>
-                <label style="margin-right: 16px;">Time</label>
-                <input type="time" name="due_time" value="{{ old('due_time') }}"
-                    style="border: 1px solid #ccc; padding: 12px;">
-            </div>
-
-            <div style="text-align: center; margin-top: 32px;">
-                <button type="submit" style="border: 1px solid #ccc; padding: 12px 48px;">
-                    Save Task
-                </button>
-            </div>
-        </form>
+        </div>
     </div>
 
     <script>
@@ -54,10 +99,10 @@
             const title = document.getElementById('title').value.trim();
             const titleError = document.getElementById('titleError');
             if (title.length < 3) {
-                titleError.style.display = 'block';
+                titleError.classList.remove('hidden');
                 valid = false;
             } else {
-                titleError.style.display = 'none';
+                titleError.classList.add('hidden');
             }
 
             const dueDate = document.getElementById('due_date').value;
@@ -65,10 +110,10 @@
             if (dueDate) {
                 const today = new Date().toISOString().split('T')[0];
                 if (dueDate < today) {
-                    dateError.style.display = 'block';
+                    dateError.classList.remove('hidden');
                     valid = false;
                 } else {
-                    dateError.style.display = 'none';
+                    dateError.classList.add('hidden');
                 }
             }
 
