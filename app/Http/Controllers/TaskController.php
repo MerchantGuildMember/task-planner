@@ -39,6 +39,7 @@ class TaskController extends Controller
     public function edit(string $id)
     {
         $task = Task::findOrFail($id);
+        abort_if($task->user_id !== Auth::id(), 403);
         return view('tasks.edit', compact('task'));
     }
 
@@ -66,6 +67,7 @@ class TaskController extends Controller
     public function destroy(string $id)
     {
         $task = Task::findOrFail($id);
+        abort_if($task->user_id !== Auth::id(), 403);
         $task->delete();
         return redirect()->route('tasks.index');
     }
@@ -73,6 +75,7 @@ class TaskController extends Controller
     public function show(string $id)
     {
         $task = Task::findOrFail($id);
+        abort_if($task->user_id !== Auth::id(), 403);
         return view('tasks.show', compact('task'));
     }
 }
