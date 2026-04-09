@@ -56,6 +56,8 @@ class TaskController extends Controller
         'is_completed' => 'boolean',
     ]);
 
+    $validated['is_completed'] = $request->boolean('is_completed');
+
     $task->update($validated);
     return redirect()->route('tasks.index')
         ->with('success', 'Task updated successfully!');
