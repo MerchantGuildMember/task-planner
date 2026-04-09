@@ -36,9 +36,10 @@
                                                     {{ $task->is_completed ? 'checked' : '' }}
                                                     disabled
                                                     class="w-4 h-4">
-                                                <span class="{{ $task->is_completed ? 'line-through text-gray-400' : 'text-gray-800' }}">
+                                                <a href="{{ route('tasks.show', $task) }}"
+                                                    class="{{ $task->is_completed ? 'line-through text-gray-400' : 'text-gray-800' }} hover:text-indigo-600">
                                                     {{ $task->title }}
-                                                </span>
+                                                </a>
                                             </div>
                                         </td>
                                         <td class="py-3 px-4 text-sm text-gray-600">
