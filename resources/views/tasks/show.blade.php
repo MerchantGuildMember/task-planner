@@ -8,6 +8,13 @@
                         Task Detail
                     </h2>
 
+                    {{-- Success message --}}
+                    @if(session('success'))
+                        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
                     {{-- Title --}}
                     <div class="mb-6">
                         <label class="block text-sm font-medium text-gray-600 mb-1">Title</label>
@@ -47,9 +54,23 @@
                             {{ $task->is_completed
                                 ? 'bg-green-100 text-green-700'
                                 : 'bg-yellow-100 text-yellow-700' }}">
-                            {{ $task->is_completed ? 'Completed' : 'Incomplete' }}
+                            {{ $task->is_completed ? '✓ Completed' : '⏳ Incomplete' }}
                         </span>
                     </div>
+
+                    {{-- Quick Complete Button --}}
+                    @if(!$task->is_completed)
+                        <form action="{{ route('tasks.update', $task) }}" method="POST" class="mb-6">
+                            @csrf
+                            @method('PATCH')
+                            <input type="hidden" name="title" value="{{ $task->title }}">
+                            <input type="hidden" name="is_completed" value="1">
+                            <button type="submit"
+                                class="w-full py-2 bg-green-600 text-white rounded-md hover:bg-green-700 font-medium">
+                                ✓ Mark as Completed
+                            </button>
+                        </form>
+                    @endif
 
                     {{-- Buttons --}}
                     <div class="flex justify-between">
