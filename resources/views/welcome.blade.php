@@ -157,8 +157,8 @@
 
     {{-- Footer --}}
     <footer class="bg-white border-t border-gray-200 py-6 text-center text-sm text-gray-400">
-        Task Planner — DkIT Server-Side Development CA2 · Maryna Hordiienko & Aleksy Cieslak
-    </footer>
+    © {{ date('Y') }} Task Planner · DkIT Server-Side Development CA2 · Maryna Hordiienko & Aleksy Cieslak
+</footer>
 
 </body>
 </html>
