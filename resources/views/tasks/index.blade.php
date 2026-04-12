@@ -7,6 +7,9 @@
                     <h2 class="text-2xl font-semibold text-gray-800 text-center mb-8">
                         My Tasks
                     </h2>
+                    <p class="text-center text-gray-400 text-sm mb-6">
+                        {{ $tasks->count() }} {{ $tasks->count() === 1 ? 'task' : 'tasks' }} total
+                    </p>
 
                     {{-- Success message --}}
                     @if(session('success'))
