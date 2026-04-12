@@ -65,12 +65,13 @@ class TaskController extends Controller
     }
     
     public function destroy(string $id)
-    {
-        $task = Task::findOrFail($id);
-        abort_if($task->user_id !== Auth::id(), 403);
-        $task->delete();
-        return redirect()->route('tasks.index');
-    }
+{
+    $task = Task::findOrFail($id);
+    abort_if($task->user_id !== Auth::id(), 403);
+    $task->delete();
+    return redirect()->route('tasks.index')
+        ->with('success', 'Task deleted successfully!');
+}
 
     public function show(string $id)
     {
