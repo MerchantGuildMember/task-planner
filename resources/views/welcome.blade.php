@@ -41,8 +41,8 @@
             <span class="text-indigo-600">That's the Secret.</span>
         </h1>
         <p class="text-xl text-gray-500 mb-10 max-w-2xl mx-auto">
-            In a world full of distractions, Task Planner helps you slow down,
-            focus on what matters, and get things done - one step at a time.
+          In a world full of distractions, Task Planner helps you slow down,
+          focus on what matters, and achieve your goals - step by step.
         </p>
         @guest
             <a href="{{ route('register') }}"
