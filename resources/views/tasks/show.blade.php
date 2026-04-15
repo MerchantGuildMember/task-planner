@@ -66,7 +66,7 @@
                     <input type="hidden" name="title" value="{{ $task->title }}">
                     <input type="hidden" name="description" value="{{ $task->description }}">
                     <input type="hidden" name="due_date" value="{{ $task->due_date?->format('Y-m-d') }}">
-                    <input type="hidden" name="due_time" value="{{ $task->due_time }}">
+                    <input type="hidden" name="due_time" value="{{ $task->due_time ? substr($task->due_time, 0, 5) : '' }}">
                     <input type="hidden" name="is_completed" value="1">
                     <button type="submit"
                     class="w-full py-2 bg-green-600 text-white rounded-md hover:bg-green-700 font-medium">
