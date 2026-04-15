@@ -51,7 +51,7 @@
                             <tbody>
                                 @foreach($tasks as $task)
                                     <tr class="border-t border-gray-100 hover:bg-gray-50 task-row"
-                                        data-completed="{{ $task->is_completed ? 'true' : 'false' }}">
+                                        data-status="{{ $task->is_completed ? 'complete' : 'incomplete' }}">
                                         <td class="py-3 px-4">
                                             <div class="flex items-center gap-3">
                                                 <input type="checkbox"
@@ -118,12 +118,7 @@
             document.getElementById('btn-' + filter).classList.remove('border', 'border-gray-300', 'text-gray-600');
 
             rows.forEach(row => {
-                const completed = row.dataset.completed === 'true';
-                if (filter === 'all') {
-                    row.style.display = '';
-                } else if (filter === 'complete' && completed) {
-                    row.style.display = '';
-                } else if (filter === 'incomplete' && !completed) {
+                if (filter === 'all' || row.dataset.status === filter) {
                     row.style.display = '';
                 } else {
                     row.style.display = 'none';
