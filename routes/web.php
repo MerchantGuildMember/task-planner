@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
 use App\Models\Task;
@@ -19,6 +20,14 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('tasks', TaskController::class);
+});
+
+// Admin panel — requires auth + admin role
+Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(function () {
+    Route::get('/',                         [AdminController::class, 'index'])      ->name('index');
+    Route::post('/seed',                    [AdminController::class, 'seed'])       ->name('seed');
+    Route::post('/clear-fake',              [AdminController::class, 'clearFake'])  ->name('clearFake');
+    Route::post('/users/{user}/toggle-role',[AdminController::class, 'toggleRole'])->name('toggleRole');
 });
 
 require __DIR__.'/auth.php';

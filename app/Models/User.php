@@ -22,6 +22,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'is_fake',
     ];
 
     /**
@@ -43,8 +45,15 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'password'          => 'hashed',
+            'is_fake'           => 'boolean',
         ];
+    }
+
+    /** Check if this user has the admin role. */
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
     }
 
     public function tasks()

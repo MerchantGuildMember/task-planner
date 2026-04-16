@@ -27,6 +27,16 @@
                 style="{{ request()->routeIs('tasks.create') ? 'background: rgba(99,102,241,0.3);' : '' }}">
                 + New Task
             </a>
+            @auth
+                @if(Auth::user()->isAdmin())
+                    <a href="{{ route('admin.index') }}"
+                        class="px-3 py-1.5 rounded-lg text-sm font-medium transition-colors duration-150
+                            {{ request()->routeIs('admin.*') ? 'text-white' : 'text-white/50 hover:text-white hover:bg-white/10' }}"
+                        style="{{ request()->routeIs('admin.*') ? 'background: rgba(139,92,246,0.35);' : '' }}">
+                        ⚙ Admin
+                    </a>
+                @endif
+            @endauth
         </div>
 
         {{-- Right side --}}
