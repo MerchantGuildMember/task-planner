@@ -63,7 +63,7 @@ class TaskController extends Controller
         $validated = $request->validate([
             'title'           => 'required|string|min:3|max:255',
             'description'     => 'nullable|string|max:1000',
-            'due_date'        => 'nullable|date|after_or_equal:today',
+            'due_date'        => 'nullable|date|after_or_equal:today|required_with:due_time',
             'due_time'        => 'nullable|date_format:H:i',
             'estimated_hours' => 'nullable|numeric|min:0.25|max:24',
             'parent_id'       => 'nullable|integer|exists:tasks,id',
@@ -100,7 +100,7 @@ class TaskController extends Controller
         $validated = $request->validate([
             'title'           => 'required|string|min:3|max:255',
             'description'     => 'nullable|string|max:1000',
-            'due_date'        => 'nullable|date',
+            'due_date'        => 'nullable|date|required_with:due_time',
             'due_time'        => 'nullable|date_format:H:i',
             'estimated_hours' => 'nullable|numeric|min:0.25|max:24',
             'is_completed'    => 'boolean',
@@ -109,6 +109,11 @@ class TaskController extends Controller
         $validated['is_completed'] = $request->boolean('is_completed');
 
         $task->update($validated);
+
+        // If a parent task is being marked complete, cascade to any remaining subtasks
+        if (!$task->parent_id && $validated['is_completed']) {
+            $task->subtasks()->where('is_completed', false)->update(['is_completed' => true]);
+        }
 
         // Auto-complete parent if all subtasks are done
         if ($task->parent_id) {
