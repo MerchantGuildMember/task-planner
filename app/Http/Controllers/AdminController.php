@@ -152,8 +152,10 @@ class AdminController extends Controller
         $count     = $fakeUsers->count();
 
         foreach ($fakeUsers as $user) {
-            // Delete tasks (parent cascade removes subtasks via FK)
-            Task::where('user_id', $user->id)->whereNull('parent_id')->delete();
+            // Delete subtasks first (avoids FK constraint issues on DBs without cascade support),
+            // then delete parent tasks, then the user.
+            Task::where('user_id', $user->id)->whereNotNull('parent_id')->delete();
+            Task::where('user_id', $user->id)->delete();
             $user->delete();
         }
 
