@@ -80,6 +80,7 @@
                                 <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Due Date</label>
                                 <input type="date" name="due_date" id="due_date"
                                     value="{{ old('due_date', $task->due_date?->format('Y-m-d')) }}"
+                                    min="{{ date('Y-m-d') }}"
                                     class="w-full rounded-xl px-3 py-2.5 text-gray-700 text-sm transition-all duration-150 focus:outline-none"
                                     style="border: 1.5px solid #e5e7eb; background:#fafafa;"
                                     onfocus="this.style.borderColor='#6366f1'; this.style.background='white'; this.style.boxShadow='0 0 0 3px rgba(99,102,241,0.1)';"
@@ -107,7 +108,7 @@
                                 <input type="number" name="estimated_hours"
                                     value="{{ old('estimated_hours', $task->estimated_hours) }}"
                                     placeholder="e.g. 1.5"
-                                    min="0.1" max="24" step="any"
+                                    min="0.25" max="24" step="any"
                                     class="w-full rounded-xl px-3 py-2.5 text-gray-700 text-sm transition-all duration-150 focus:outline-none"
                                     style="border: 1.5px solid #e5e7eb; background:#fafafa;"
                                     onfocus="this.style.borderColor='#6366f1'; this.style.background='white'; this.style.boxShadow='0 0 0 3px rgba(99,102,241,0.1)';"

@@ -70,7 +70,7 @@ class TaskController extends Controller
         ]);
 
         if (!empty($validated['parent_id'])) {
-            $parent = Task::find($validated['parent_id']);
+            $parent = Task::findOrFail($validated['parent_id']);
             abort_if($parent->user_id !== Auth::id(), 403);
         }
 
@@ -100,7 +100,7 @@ class TaskController extends Controller
         $validated = $request->validate([
             'title'           => 'required|string|min:3|max:255',
             'description'     => 'nullable|string|max:1000',
-            'due_date'        => 'nullable|date|required_with:due_time',
+            'due_date'        => 'nullable|date|after_or_equal:today|required_with:due_time',
             'due_time'        => 'nullable|date_format:H:i',
             'estimated_hours' => 'nullable|numeric|min:0.25|max:24',
             'is_completed'    => 'boolean',
