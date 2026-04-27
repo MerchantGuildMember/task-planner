@@ -15,18 +15,18 @@
                     <h1 class="text-3xl font-bold text-white tracking-tight">My Tasks</h1>
                     <p class="text-white/40 text-sm mt-1">Organize, track, and get things done</p>
                 </div>
-                <div class="flex gap-3">
-                    <div class="rounded-xl px-4 py-2.5 text-center flex-shrink-0"
+                <div class="flex gap-2 sm:gap-3 w-full sm:w-auto">
+                    <div class="flex-1 sm:flex-none rounded-xl px-3 sm:px-4 py-2.5 text-center"
                         style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1);">
                         <div class="text-xl font-bold text-white">{{ $tasks->count() }}</div>
                         <div class="text-xs text-white/40 mt-0.5">Total</div>
                     </div>
-                    <div class="rounded-xl px-4 py-2.5 text-center flex-shrink-0"
+                    <div class="flex-1 sm:flex-none rounded-xl px-3 sm:px-4 py-2.5 text-center"
                         style="background: rgba(52,211,153,0.12); border: 1px solid rgba(52,211,153,0.2);">
                         <div class="text-xl font-bold text-emerald-400">{{ $tasks->where('is_completed', true)->count() }}</div>
                         <div class="text-xs text-emerald-400/60 mt-0.5">Done</div>
                     </div>
-                    <div class="rounded-xl px-4 py-2.5 text-center flex-shrink-0"
+                    <div class="flex-1 sm:flex-none rounded-xl px-3 sm:px-4 py-2.5 text-center"
                         style="background: rgba(251,191,36,0.12); border: 1px solid rgba(251,191,36,0.2);">
                         <div class="text-xl font-bold text-amber-400">{{ $tasks->where('is_completed', false)->count() }}</div>
                         <div class="text-xs text-amber-400/60 mt-0.5">Pending</div>
@@ -34,7 +34,7 @@
                 </div>
             </div>
 
-            <div class="flex flex-col lg:flex-row gap-6 items-start">
+            <div class="flex flex-col lg:flex-row gap-6 lg:items-start">
 
                 {{-- Calendar Sidebar --}}
                 <div class="w-full lg:w-72 flex-shrink-0 order-2 lg:order-1">
