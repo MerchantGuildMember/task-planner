@@ -6,7 +6,7 @@
         </div>
     </div>
 @endif
-    <div class="py-8">
+    <div class="py-4 sm:py-8 pb-24 lg:pb-8">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
             {{-- Page header + stats --}}
@@ -38,6 +38,26 @@
 
                 {{-- Calendar Sidebar --}}
                 <div class="w-full lg:w-72 flex-shrink-0 order-2 lg:order-1">
+
+                    {{-- Mobile calendar toggle --}}
+                    <button onclick="toggleCalendar()" id="calendar-toggle"
+                        class="lg:hidden w-full flex items-center justify-between px-4 py-3 rounded-xl mb-2 transition-colors duration-150"
+                        style="background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);">
+                        <span class="flex items-center gap-2 text-sm font-medium" style="color: rgba(255,255,255,0.7);">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            Calendar
+                        </span>
+                        <svg id="calendar-chevron" class="w-4 h-4 transition-transform duration-200"
+                            style="color: rgba(255,255,255,0.3);"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+
+                    <div id="calendar-content" class="hidden lg:block">
                     <div class="rounded-2xl p-5"
                         style="background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); backdrop-filter: blur(12px);">
 
@@ -88,6 +108,7 @@
                                 onmouseout="this.style.color='rgba(255,255,255,0.3)';">clear</button>
                         </div>
                     </div>
+                    </div>{{-- end calendar-content --}}
                 </div>
 
                 {{-- Tasks Panel --}}
@@ -346,8 +367,8 @@
                                 </div>
                             @endif
 
-                            {{-- Create task button --}}
-                            <div class="mt-5 text-center">
+                            {{-- Create task button (desktop) --}}
+                            <div class="mt-5 text-center hidden sm:block">
                                 <a href="{{ route('tasks.create') }}"
                                     class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm text-white transition-all duration-200 hover:opacity-90 hover:shadow-lg active:scale-95"
                                     style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">
@@ -357,6 +378,13 @@
                                     {{ $tasks->isEmpty() ? 'Create your first task' : 'New task' }}
                                 </a>
                             </div>
+
+                            {{-- Mobile empty state CTA --}}
+                            @if($tasks->isEmpty())
+                                <div class="mt-5 text-center sm:hidden">
+                                    <p class="text-gray-400 text-sm">Tap <strong class="text-indigo-500">+</strong> to create your first task</p>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -536,5 +564,24 @@
 
         renderCalendar();
         applyFilters();
+
+        // Calendar toggle (mobile)
+        function toggleCalendar() {
+            const content  = document.getElementById('calendar-content');
+            const chevron  = document.getElementById('calendar-chevron');
+            const isHidden = content.classList.contains('hidden');
+            content.classList.toggle('hidden', !isHidden);
+            chevron.style.transform = isHidden ? 'rotate(180deg)' : '';
+        }
     </script>
+
+    {{-- Floating Action Button (mobile only) --}}
+    <a href="{{ route('tasks.create') }}"
+        class="sm:hidden fixed bottom-6 right-6 w-14 h-14 rounded-full flex items-center justify-center text-white z-40 active:scale-95 transition-transform duration-150"
+        style="background: linear-gradient(135deg, #6366f1, #8b5cf6); box-shadow: 0 4px 20px rgba(99,102,241,0.55);"
+        aria-label="New task">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/>
+        </svg>
+    </a>
 </x-app-layout>
