@@ -34,7 +34,7 @@
                 </div>
             </div>
 
-            <div class="flex flex-col lg:flex-row gap-6 lg:items-start">
+            <div class="flex flex-col lg:flex-row gap-6 items-start">
 
                 {{-- Calendar Sidebar --}}
                 <div class="w-full lg:w-72 flex-shrink-0 order-2 lg:order-1">
@@ -112,7 +112,7 @@
                 </div>
 
                 {{-- Tasks Panel --}}
-                <div class="flex-1 order-1 lg:order-2">
+                <div class="flex-1 w-full lg:w-auto order-1 lg:order-2 min-w-0">
                     <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
 
                         {{-- Panel header (filter bar) --}}
