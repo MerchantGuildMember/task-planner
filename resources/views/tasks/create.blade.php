@@ -87,7 +87,7 @@
                         </div>
 
                         {{-- Due Date / Time / Est. Hours --}}
-                        <div class="mb-6 grid grid-cols-3 gap-3">
+                        <div class="mb-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
                             <div>
                                 <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Due Date</label>
                                 <input type="date" name="due_date" id="due_date"

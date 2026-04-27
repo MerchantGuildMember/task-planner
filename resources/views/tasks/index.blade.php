@@ -37,7 +37,7 @@
             <div class="flex flex-col lg:flex-row gap-6 items-start">
 
                 {{-- Calendar Sidebar --}}
-                <div class="w-full lg:w-72 flex-shrink-0">
+                <div class="w-full lg:w-72 flex-shrink-0 order-2 lg:order-1">
                     <div class="rounded-2xl p-5"
                         style="background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); backdrop-filter: blur(12px);">
 
@@ -91,7 +91,7 @@
                 </div>
 
                 {{-- Tasks Panel --}}
-                <div class="flex-1">
+                <div class="flex-1 order-1 lg:order-2">
                     <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
 
                         {{-- Panel header (filter bar) --}}
